@@ -365,3 +365,73 @@ body {
     opacity: 0;
     cursor: pointer;
 }
+/* ---------- Chat UI (Chatbot + Insights document/analytics tabs) ---------- */
+.chat-window {
+    height: 380px;
+    overflow-y: auto;
+    background: var(--mercado-bg);
+    border-radius: 16px;
+    padding: 1rem;
+}
+.chat-bubble {
+    max-width: 78%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-bottom: 0.6rem;
+}
+.chat-bubble.user {
+    background: var(--mercado-accent);
+    color: #FFF7EE;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+.chat-bubble.bot {
+    background: var(--mercado-surface);
+    color: var(--mercado-ink);
+    border: 1px solid var(--mercado-border);
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+.chat-input-bar {
+    background: var(--mercado-surface);
+    border-radius: 14px;
+    padding: 0.6rem;
+}
+.chat-input-bar input {
+    border: none;
+    background: transparent;
+}
+.chat-input-bar input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* ---------- Insights tabs ---------- */
+.insights-tabs .nav-link {
+    color: var(--mercado-muted);
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.6rem 1rem;
+}
+.insights-tabs .nav-link.active {
+    color: var(--mercado-accent-dark);
+    background: transparent;
+    border-bottom: 2px solid var(--mercado-accent);
+}
+.insight-result-box {
+    background: var(--mercado-surface);
+    border-radius: 16px;
+    padding: 1.25rem;
+    white-space: pre-line;
+    font-size: 0.9rem;
+    color: var(--mercado-ink);
+    min-height: 80px;
+}
+.doc-status-card {
+    background: var(--mercado-surface);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+}
