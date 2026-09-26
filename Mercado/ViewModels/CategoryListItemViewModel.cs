@@ -1,0 +1,10 @@
+namespace Mercado.ViewModels
+{
+    public class CategoryListItemViewModel
+    {
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
+        public string? Description { get; set; }
+        public int ProductsCount { get; set; }
+    }
+}
