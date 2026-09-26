@@ -1,31 +1,27 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Mercado.Models;
+using Mercado.Context;
+using Mercado.Filters;
+using Mercado.ViewModels;
 
-namespace Mercado.Controllers;
-
-public class HomeController : Controller
+namespace Mercado.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [RequireLogin]
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        MercadoDbContext db = new MercadoDbContext();
+        private const int LowStockThreshold = 5;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            var vm = new HomeViewModel
+            {
+                UserFullName = HttpContext.Session.GetString("UserFullName") ?? "",
+                ProductsCount = db.Products.Count(),
+                CategoriesCount = db.Categories.Count(),
+                LowStockCount = db.Products.Count(p => p.Quantity <= LowStockThreshold)
+            };
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(vm);
+        }
     }
 }
