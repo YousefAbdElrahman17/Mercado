@@ -11,6 +11,12 @@ namespace Mercado.Controllers
     public class CategoryController : Controller
     {
         MercadoDbContext db = new MercadoDbContext();
+        private readonly IWebHostEnvironment _env;
+
+        public CategoryController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -23,7 +29,8 @@ namespace Mercado.Controllers
                         CategoryId = c.CategoryId,
                         Name = c.Name,
                         Description = c.Description,
-                        ProductsCount = c.Products.Count
+                        ProductsCount = c.Products.Count,
+                        ImagePath = c.ImagePath
                     }).ToList()
             };
 
@@ -45,6 +52,7 @@ namespace Mercado.Controllers
                 Name = category.Name,
                 Description = category.Description,
                 ProductTitles = category.Products.Select(p => p.Title).ToList(),
+                ImagePath = category.ImagePath,
                 IconClass = GetIconForCategory(category.Name)
             };
 
@@ -69,6 +77,9 @@ namespace Mercado.Controllers
                 Description = vm.Description
             };
 
+            if (vm.ImageFile != null)
+                category.ImagePath = SaveImage(vm.ImageFile);
+
             db.Categories.Add(category);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -84,7 +95,8 @@ namespace Mercado.Controllers
             {
                 CategoryId = category.CategoryId,
                 Name = category.Name,
-                Description = category.Description
+                Description = category.Description,
+                CurrentImagePath = category.ImagePath
             };
 
             return View(vm);
@@ -102,6 +114,9 @@ namespace Mercado.Controllers
             category.Name = vm.Name;
             category.Description = vm.Description;
 
+            if (vm.ImageFile != null)
+                category.ImagePath = SaveImage(vm.ImageFile);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -111,7 +126,6 @@ namespace Mercado.Controllers
         {
             var category = db.Categories.Include(c => c.Products).SingleOrDefault(c => c.CategoryId == id);
             if (category == null) return NotFound();
-
             if (category.Products.Any())
             {
                 TempData["Error"] = "You can't delete a category that still has products in it. Delete or reassign its products first.";
@@ -123,7 +137,24 @@ namespace Mercado.Controllers
             return RedirectToAction("Index");
         }
 
-        private static string GetIconForCategory(string name) => name switch{
+        private string SaveImage(IFormFile file)
+        {
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "images", "categories");
+            Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return $"/images/categories/{fileName}";
+        }
+
+        private static string GetIconForCategory(string name) => name switch
+        {
             "Electronics" => "ti-device-desktop",
             "Groceries" => "ti-shopping-cart",
             "Furniture" => "ti-armchair",
