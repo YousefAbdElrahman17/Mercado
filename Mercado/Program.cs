@@ -19,12 +19,12 @@ namespace Mercado
                 options.IdleTimeout = TimeSpan.FromSeconds(55);
             });
 
-            if(args.Length>0 && args[0] == "hash")
-            {
-                var hasher = new PasswordHasher<User>();
-                Console.WriteLine(hasher.HashPassword(null!,"Test@1234"));
-                return;
-            }
+            // if(args.Length>0 && args[0] == "hash")
+            // {
+            //     var hasher = new PasswordHasher<User>();
+            //     Console.WriteLine(hasher.HashPassword(null!,"Test@1234"));
+            //     return;
+            // }
 
             var app = builder.Build();
 
