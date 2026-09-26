@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "AI Chatbot";
+}
+
+<div class="d-flex align-items-center gap-2 mb-4">
+    <i class="ti ti-robot fs-3" style="color:var(--mercado-accent-dark)"></i>
+    <h3 class="fw-medium mb-0">Inventory Chatbot</h3>
+</div>
+
+<div class="card p-3" style="max-width:640px; margin:0 auto;">
+    <div id="chatWindow" class="chat-window mb-2"></div>
+    <form id="chatForm" class="chat-input-bar d-flex gap-2">
+        <input id="chatInput" type="text" class="form-control" placeholder="Ask about products or stock..." autocomplete="off" />
+        <button type="submit" class="btn btn-primary rounded-3 px-4">Send</button>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('chatInput');
+    const win = document.getElementById('chatWindow');
+
+    function appendMessage(text, isUser) {
+        const div = document.createElement('div');
+        div.className = 'chat-bubble ' + (isUser ? 'user' : 'bot');
+        div.innerText = text;
+        win.appendChild(div);
+        win.scrollTop = win.scrollHeight;
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        appendMessage(message, true);
+        input.value = '';
+        appendMessage('Thinking...', false);
+
+        const res = await fetch('/ChatBot/Ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        });
+
+        win.lastChild.remove();
+        if (res.ok) {
+            const data = await res.json();
+            appendMessage(data.reply, false);
+        } else {
+            appendMessage('Something went wrong, please try again.', false);
+        }
+    });
+</script>
+}
