@@ -435,3 +435,35 @@ body {
     border-radius: 16px;
     padding: 1rem 1.25rem;
 }
+/* ---------- Auth pages (Login / Register) ---------- */
+.auth-page {
+    min-height: 100vh;
+    background: var(--mercado-bg);
+    padding: 1.5rem;
+}
+.auth-wrapper {
+    width: 100%;
+    max-width: 380px;
+}
+.auth-card {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    padding: 2rem 1.75rem;
+}
+.auth-card .form-control {
+    background: var(--mercado-bg);
+    border: none;
+    padding: 0.65rem 0.9rem;
+}
+.auth-card .form-label {
+    font-size: 0.8rem;
+    color: var(--mercado-muted);
+}
+.auth-switch-link {
+    color: var(--mercado-accent-dark);
+    font-weight: 500;
+    text-decoration: none;
+}
+.auth-switch-link:hover {
+    text-decoration: underline;
+}
