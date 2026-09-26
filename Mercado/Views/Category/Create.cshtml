@@ -4,12 +4,16 @@
 }
 
 <div class="form-card-category mx-auto">
-    <div class="d-flex align-items-center gap-2 mb-4">
-        <i class="ti ti-category-plus form-card-header"></i>
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <div class="category-image-picker" id="picker">
+            <i class="ti ti-photo-plus" id="pickerIcon"></i>
+            <img id="previewImg" style="display:none;" />
+            <input type="file" name="ImageFile" accept="image/*" onchange="previewImage(this)" />
+        </div>
         <span class="font-mono small text-uppercase form-card-header" style="letter-spacing:.05em;">New Category</span>
     </div>
 
-    <form asp-action="Create" method="post">
+    <form asp-action="Create" method="post" enctype="multipart/form-data" id="createForm">
         <div asp-validation-summary="All" class="text-danger mb-2"></div>
 
         <div class="mb-3">
@@ -32,4 +36,19 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('picker').querySelector('input').setAttribute('form', 'createForm');
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewImg').style.display = 'block';
+                    document.getElementById('pickerIcon').style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }

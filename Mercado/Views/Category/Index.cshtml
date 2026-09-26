@@ -21,7 +21,16 @@
         <div class="col-6 col-md-4 col-lg-3">
             <div class="category-tile-wrapper">
                 <a asp-action="Details" asp-route-id="@c.CategoryId" class="category-tile stretched-link">
-                    <i class="ti @c.IconClass"></i>
+                    <div class="category-media">
+                        @if (!string.IsNullOrEmpty(c.ImagePath))
+                        {
+                            <img src="@c.ImagePath" alt="@c.Name" />
+                        }
+                        else
+                        {
+                            <i class="ti @c.IconClass"></i>
+                        }
+                    </div>
                     <p class="category-name">@c.Name</p>
                     <span class="category-count">@c.ProductsCount.ToString("00") items</span>
                 </a>

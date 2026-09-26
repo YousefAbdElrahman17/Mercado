@@ -5,14 +5,25 @@
 
 <div class="form-card-category edit-mode mx-auto">
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <div class="d-flex align-items-center gap-2">
-            <i class="ti ti-pencil form-card-header"></i>
+        <div class="d-flex align-items-center gap-3">
+            <div class="category-image-picker" id="picker">
+                @if (!string.IsNullOrEmpty(Model.CurrentImagePath))
+                {
+                    <img id="previewImg" src="@Model.CurrentImagePath" />
+                }
+                else
+                {
+                    <i class="ti ti-photo-plus" id="pickerIcon"></i>
+                    <img id="previewImg" style="display:none;" />
+                }
+                <input type="file" name="ImageFile" accept="image/*" onchange="previewImage(this)" />
+            </div>
             <span class="font-mono small text-uppercase form-card-header" style="letter-spacing:.05em;">Edit Category</span>
         </div>
         <span class="font-mono small" style="color:var(--mercado-muted);">#@Model.CategoryId.ToString("00")</span>
     </div>
 
-    <form asp-action="Edit" method="post">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" id="editForm">
         <input type="hidden" asp-for="CategoryId" />
         <div asp-validation-summary="All" class="text-danger mb-2"></div>
 
@@ -36,4 +47,20 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('picker').querySelector('input').setAttribute('form', 'editForm');
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewImg').style.display = 'block';
+                    const icon = document.getElementById('pickerIcon');
+                    if (icon) icon.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 }
