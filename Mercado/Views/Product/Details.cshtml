@@ -1,0 +1,52 @@
+﻿@model Mercado.ViewModels.ProductDetailsViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="details-card-horizontal mb-4">
+    <div class="details-media">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" alt="@Model.Title" />
+        }
+        else
+        {
+            <i class="ti ti-package"></i>
+        }
+    </div>
+    <div class="details-body">
+        <span class="font-mono small text-uppercase" style="color:var(--mercado-accent-dark); letter-spacing:.05em;">
+            @Model.CategoryName
+        </span>
+        <h3 class="fw-medium mt-1 mb-2">@Model.Title</h3>
+        <p class="text-muted mb-3">@Model.Description</p>
+
+        <div class="d-flex align-items-center gap-3 mb-1">
+            <span class="fs-4 fw-semibold" style="color:var(--mercado-ink-dark)">@Model.Price.ToString("0.00")</span>
+            <span class="badge-stock @(Model.Quantity <= 5 ? "low" : "")">qty @Model.Quantity</span>
+        </div>
+        <span class="view-count-pill"><i class="ti ti-eye"></i> @Model.ViewCount views</span>
+
+        <div class="mt-4">
+            <a asp-action="Index" class="btn btn-outline-primary rounded-3 px-4">
+                <i class="ti ti-arrow-left me-1"></i> Back to Products
+            </a>
+        </div>
+    </div>
+</div>
+
+@if (Model.RecentlyViewed.Any())
+{
+    <div class="card p-3" style="max-width:640px; margin:0 auto;">
+        <h6 class="fw-medium mb-3">Recently viewed</h6>
+        <div class="d-flex gap-2 flex-wrap">
+            @foreach (var item in Model.RecentlyViewed)
+            {
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm rounded-pill"
+                   style="background:var(--mercado-bg); color:var(--mercado-ink); border:1px solid var(--mercado-border);">
+                    @item.Name
+                </a>
+            }
+        </div>
+    </div>
+}

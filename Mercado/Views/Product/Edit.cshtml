@@ -1,0 +1,83 @@
+﻿@model Mercado.ViewModels.EditProductViewModel
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="form-card-product mx-auto">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="font-mono small text-uppercase" style="color:var(--mercado-accent-dark); letter-spacing:.05em;">Edit Product</span>
+        <span class="font-mono small" style="color:var(--mercado-muted);">#@Model.ProductId.ToString("0000")</span>
+    </div>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+        <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+        <div class="edit-thumb-wrapper mb-3">
+            @if (!string.IsNullOrEmpty(Model.CurrentImagePath))
+            {
+                <img id="previewImg" src="@Model.CurrentImagePath" />
+            }
+            else
+            {
+                <i class="ti ti-package placeholder-icon" id="placeholderIcon"></i>
+                <img id="previewImg" style="display:none;" />
+            }
+            <div class="edit-thumb-pencil"><i class="ti ti-pencil"></i></div>
+            <input asp-for="ImageFile" type="file" accept="image/*" onchange="previewImage(this)" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label small text-muted"></label>
+            <input asp-for="Title" class="form-control" style="background:var(--mercado-bg); border:none;" />
+            <span asp-validation-for="Title" class="text-danger small"></span>
+        </div>
+
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label asp-for="Price" class="form-label small text-muted"></label>
+                <input asp-for="Price" class="form-control font-mono" style="background:var(--mercado-bg); border:none;" />
+                <span asp-validation-for="Price" class="text-danger small"></span>
+            </div>
+            <div class="col-6">
+                <label asp-for="Quantity" class="form-label small text-muted"></label>
+                <input asp-for="Quantity" class="form-control font-mono" style="background:var(--mercado-bg); border:none;" />
+                <span asp-validation-for="Quantity" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label small text-muted"></label>
+            <textarea asp-for="Description" class="form-control" style="background:var(--mercado-bg); border:none;" rows="3"></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="CategoryId" class="form-label small text-muted"></label>
+            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select" style="background:var(--mercado-bg); border:none;"></select>
+            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+            <a asp-action="Index" class="btn btn-link text-muted text-decoration-none">Cancel</a>
+            <button type="submit" class="btn rounded-3 px-4 text-white" style="background:var(--mercado-accent-dark); border-color:var(--mercado-accent-dark);">Update Product</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewImg').style.display = 'block';
+                    const icon = document.getElementById('placeholderIcon');
+                    if (icon) icon.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
