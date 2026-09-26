@@ -13,7 +13,7 @@ namespace Mercado.Context
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Database data (deleted for upload)
+           // optionsBuilder.database data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace Mercado.Context
             //Data Seeding
 
                             //  PasswordHasher -> make pass stored in db in symbols.
-            var hasher = new PasswordHasher<User>();
+            const string demoPasswordHash = "AQAAAAIAAYagAAAAEBevwJzhWeoRtDQ35Sog1zjBjrgU4/xViWMZFQCllLaLJt8pEYY+Kl7E5U5iE+FzoA==";
+
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
@@ -47,7 +48,7 @@ namespace Mercado.Context
                     FirstName = "Ahmed",
                     LastName = "Mostafa",
                     Email = "ahmed@mercado.com",
-                    Password = hasher.HashPassword(null!, "Test@1234")
+                    Password = demoPasswordHash
                 },
                 new User
                 {
@@ -55,7 +56,7 @@ namespace Mercado.Context
                     FirstName = "Sara",
                     LastName = "Ali",
                     Email = "sara@mercado.com",
-                    Password = hasher.HashPassword(null!, "Test@1234")
+                    Password = demoPasswordHash
                 }
             );
 
