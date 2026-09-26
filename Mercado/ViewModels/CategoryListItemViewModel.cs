@@ -6,6 +6,7 @@ namespace Mercado.ViewModels
         public string Name { get; set; }
         public string? Description { get; set; }
         public int ProductsCount { get; set; }
+        public string? ImagePath {get; set;}
         public string IconClass { get; set; } = "ti-tag";
     }
 }

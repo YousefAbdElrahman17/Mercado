@@ -12,5 +12,9 @@ namespace Mercado.ViewModels
 
         [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string? Description { get; set; }
+        public string? CurrentImagePath {get; set;}
+
+        public IFormFile? ImageFile {get; set;}
+
     }
 }
