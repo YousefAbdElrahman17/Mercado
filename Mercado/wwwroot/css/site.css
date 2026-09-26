@@ -179,3 +179,189 @@ body {
 .form-card-category.edit-mode .form-card-header {
     color: var(--mercado-accent-dark);
 }
+/* ---------- Product grid card ---------- */
+.product-card {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+.product-card .product-media {
+    height: 140px;
+    background: var(--mercado-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.product-card .product-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-card .product-media i {
+    font-size: 1.8rem;
+    color: var(--mercado-accent-dark);
+}
+.product-card .product-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.product-card .product-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: .04em;
+    color: var(--mercado-accent-dark);
+    text-transform: uppercase;
+}
+.product-card .product-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--mercado-ink);
+    margin: 0.35rem 0 0.6rem;
+}
+.product-card .product-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.product-card .product-price {
+    font-weight: 600;
+    color: var(--mercado-ink-dark);
+}
+.badge-stock {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #F0E8DC;
+    color: var(--mercado-muted);
+}
+.badge-stock.low {
+    background: var(--mercado-tint);
+    color: var(--mercado-accent-dark);
+}
+.view-count-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--mercado-muted);
+}
+
+/* ---------- Product details card (horizontal) ---------- */
+.details-card-horizontal {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 640px;
+    margin: 0 auto;
+}
+.details-card-horizontal .details-media {
+    width: 220px;
+    flex: 0 0 220px;
+    background: var(--mercado-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+}
+.details-card-horizontal .details-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.details-card-horizontal .details-media i {
+    font-size: 2.5rem;
+    color: var(--mercado-accent-dark);
+}
+.details-card-horizontal .details-body {
+    flex: 1;
+    min-width: 240px;
+    padding: 1.5rem;
+}
+
+/* ---------- Add Product form (dropzone style) ---------- */
+.form-card-product {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    padding: 1.5rem;
+    max-width: 480px;
+}
+.image-dropzone {
+    border: 1.5px dashed #E3B49A;
+    border-radius: 14px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    background: var(--mercado-bg);
+    position: relative;
+}
+.image-dropzone i {
+    font-size: 1.4rem;
+    color: var(--mercado-accent);
+}
+.image-dropzone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.image-dropzone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* ---------- Edit Product thumbnail ---------- */
+.edit-thumb-wrapper {
+    position: relative;
+    border-radius: 14px;
+    height: 110px;
+    background: var(--mercado-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.edit-thumb-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.edit-thumb-wrapper i.placeholder-icon {
+    font-size: 1.6rem;
+    color: var(--mercado-accent-dark);
+}
+.edit-thumb-pencil {position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: var(--mercado-surface);
+    border-radius: 999px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    cursor: pointer;
+}
+.edit-thumb-pencil i {
+    font-size: 0.75rem;
+    color: var(--mercado-accent);
+}
+.edit-thumb-wrapper input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
