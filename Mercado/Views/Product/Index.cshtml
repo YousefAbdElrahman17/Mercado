@@ -10,38 +10,38 @@
     </a>
 </div>
 
-<div class="row g-3">
+<div class="row g-4">
     @foreach (var p in Model.Products)
     {
         <div class="col-6 col-md-4 col-lg-3">
-            <a asp-action="Details" asp-route-id="@p.ProductId" class="product-card">
-                <div class="product-media">
-                    @if (!string.IsNullOrEmpty(p.ImagePath))
-                    {
-                        <img src="@p.ImagePath" alt="@p.Title" />
-                    }
-                    else
-                    {
-                        <i class="ti ti-package"></i>
-                    }
-                </div>
-                <div class="product-body">
-                    <span class="product-category">@p.CategoryName</span>
-                    <p class="product-title">@p.Title</p>
-                    <div class="product-footer">
-                        <span class="product-price">@p.Price.ToString("0.00")</span>
-                        <span class="badge-stock @(p.IsLowStock ? "low" : "")">qty @p.Quantity</span>
+            <div class="product-card-wrapper">
+                <a asp-action="Details" asp-route-id="@p.ProductId" class="product-card stretched-link">
+                    <div class="product-media">
+                        @if (!string.IsNullOrEmpty(p.ImagePath))
+                        {
+                            <img src="@p.ImagePath" alt="@p.Title" />
+                        }
+                        else
+                        {
+                            <i class="ti ti-package"></i>
+                        }
                     </div>
-                    <div class="mt-2">
-                        <span class="view-count-pill"><i class="ti ti-eye"></i> @p.ViewCount</span>
+                    <div class="product-body">
+                        <span class="product-category">@p.CategoryName</span>
+                        <p class="product-title">@p.Title</p>
+                        <div class="product-footer">
+                            <span class="product-price">@p.Price.ToString("0.00")</span>
+                            <span class="badge-stock @(p.IsLowStock ? "low" : "")">qty @p.Quantity</span>
+                        </div>
                     </div>
+                </a>
+                <span class="view-count-pill"><i class="ti ti-eye"></i> @p.ViewCount</span>
+                <div class="product-actions">
+                    <a asp-action="Edit" asp-route-id="@p.ProductId" class="text-decoration-none small" style="color:var(--mercado-muted)">Edit</a>
+                    <span style="color:var(--mercado-border)">|</span>
+                    <a asp-action="Delete" asp-route-id="@p.ProductId" class="text-decoration-none small text-danger"
+                       onclick="return confirm('Delete this product?');">Delete</a>
                 </div>
-            </a>
-            <div class="d-flex justify-content-center gap-2 mt-2">
-                <a asp-action="Edit" asp-route-id="@p.ProductId" class="text-decoration-none small" style="color:var(--mercado-muted)">Edit</a>
-                <span style="color:var(--mercado-border)">|</span>
-                <a asp-action="Delete" asp-route-id="@p.ProductId" class="text-decoration-none small text-danger"
-                   onclick="return confirm('Delete this product?');">Delete</a>
             </div>
         </div>
     }

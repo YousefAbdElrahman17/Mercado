@@ -79,12 +79,15 @@ body {
 }
 
 /* ---------- Stat cards (Home) ---------- */
+main.container {
+    max-width: 1140px;
+}
 .stat-card {
     background: var(--mercado-surface);
     border-radius: var(--bs-border-radius-lg);
-    padding: 1.5rem 1rem;
+    padding: 2rem 1rem;
     text-align: center;
-    min-height: 100px;
+    min-height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,7 +97,7 @@ body {
 }
 .stat-value {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-weight: 600;
     color: var(--mercado-ink-dark);
     margin-bottom: 4px;
@@ -103,7 +106,7 @@ body {
     color: var(--mercado-accent-dark);
 }
 .stat-label {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--mercado-muted);
 }
 .stat-alert .stat-label {
@@ -111,18 +114,17 @@ body {
 }
 
 /* ---------- Category tiles (used later in Category/Index) ---------- */
+.category-tile-wrapper {
+    position: relative;
+}
 .category-tile {
     background: var(--mercado-surface);
-    border-radius: var(--bs-border-radius-lg);
+    border-radius: var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0 0;
     padding: 1.5rem 1rem;
     text-align: center;
     text-decoration: none;
     display: block;
     min-height: 120px;
-    transition: transform .15s ease;
-}
-.category-tile:hover {
-    transform: translateY(-2px);
 }
 .category-tile i {
     font-size: 1.6rem;
@@ -139,58 +141,32 @@ body {
     font-size: 0.75rem;
     color: var(--mercado-accent-dark);
 }
-/* ---------- Category details card (vertical) ---------- */
-.details-card-vertical {
-    background: var(--mercado-surface);
-    border-radius: var(--bs-border-radius-lg);
-    overflow: hidden;
-    max-width: 480px;
-    margin: 0 auto;
-}
-.details-card-vertical .details-media {
-    height: 160px;
-    background: var(--mercado-tint);
+.category-actions {
+    position: relative;
+    z-index: 2;
     display: flex;
-    align-items: center;
     justify-content: center;
-}
-.details-card-vertical .details-media i {
-    font-size: 2.5rem;
-    color: var(--mercado-accent-dark);
-}
-.details-card-vertical .details-body {
-    padding: 1.5rem;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    background: var(--mercado-surface);
+    border-radius: 0 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg);
+    border-top: 1px solid var(--mercado-border);
 }
 
-/* ---------- Add/Edit forms ---------- */
-.form-card-category {
-    background: var(--mercado-surface);
-    border-radius: 14px;
-    padding: 1.5rem 1.5rem 1.5rem 1.25rem;
-    border-left: 4px solid var(--mercado-accent);
-    max-width: 480px;
+/* ---------- Product card  ---------- */
+.product-card-wrapper {
+    position: relative;
 }
-.form-card-category.edit-mode {
-    border-left-color: var(--mercado-accent-dark);
-}
-.form-card-category .form-card-header {
-    color: var(--mercado-accent-dark);
-}
-.form-card-category.edit-mode .form-card-header {
-    color: var(--mercado-accent-dark);
-}
-/* ---------- Product grid card ---------- */
 .product-card {
     background: var(--mercado-surface);
     border-radius: var(--bs-border-radius-lg);
     overflow: hidden;
-    height: 100%;
     display: flex;
     flex-direction: column;
     text-decoration: none;
 }
 .product-card .product-media {
-    height: 140px;
+    height: 150px;
     background: var(--mercado-tint);
     display: flex;
     align-items: center;
@@ -208,9 +184,6 @@ body {
 }
 .product-card .product-body {
     padding: 1rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
 }
 .product-card .product-category {
     font-family: 'JetBrains Mono', monospace;
@@ -224,9 +197,9 @@ body {
     font-weight: 500;
     color: var(--mercado-ink);
     margin: 0.35rem 0 0.6rem;
+    min-height: 2.5em;
 }
 .product-card .product-footer {
-    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -251,6 +224,18 @@ body {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     color: var(--mercado-muted);
+    padding: 0 1rem 0.75rem;
+    display: block;
+}
+.product-actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--mercado-border);
+    background: var(--mercado-surface);
 }
 
 /* ---------- Product details card (horizontal) ---------- */
