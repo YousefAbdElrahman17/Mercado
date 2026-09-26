@@ -2,8 +2,6 @@ using Mercado.Models;
 using Mercado.Services;
 using Mercado.Context;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Mercado
 {
@@ -14,26 +12,9 @@ namespace Mercado
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(55);
-            });
 
-            // if(args.Length>0 && args[0] == "hash")
-            // {
-            //     var hasher = new PasswordHasher<User>();
-            //     Console.WriteLine(hasher.HashPassword(null!,"Test@1234"));
-            //     return;
-            // }
+            builder.Services.AddScoped<MercadoDbContext>();
 
-            var app = builder.Build();
-
-            //////----------------------------------------------------------------
-            // ---------- Database ----------
-            builder.Services.AddDbContext<MercadoDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            // ---------- Session ----------
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
@@ -42,22 +23,19 @@ namespace Mercado
                 options.Cookie.IsEssential = true;
             });
 
-            // ---------- Auth ----------
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-            // ---------- Product view tracking ----------
             builder.Services.AddScoped<IProductViewService, ProductViewService>();
 
-            // ---------- AI services (Chatbot + Insights Dashboard) ----------
             builder.Services.AddHttpClient<IGeminiService, GeminiService>();
             builder.Services.AddScoped<IInventoryChatService, InventoryChatService>();
             builder.Services.AddScoped<IInventoryContextBuilder, InventoryContextBuilder>();
             builder.Services.AddScoped<IInventoryInsightsService, InventoryInsightsService>();
             builder.Services.AddScoped<IPdfTextExtractor, PdfTextExtractor>();
             builder.Services.AddScoped<IDocumentChatService, DocumentChatService>();
-            /// --------------------------------------------------------------------
-             
-            
+
+            var app = builder.Build();
+
             //Run both
             app.Map("/middleware-test", middlewareApp =>
             {
