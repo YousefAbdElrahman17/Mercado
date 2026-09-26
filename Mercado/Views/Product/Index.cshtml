@@ -33,14 +33,14 @@
                             <span class="product-price">@p.Price.ToString("0.00")</span>
                             <span class="badge-stock @(p.IsLowStock ? "low" : "")">qty @p.Quantity</span>
                         </div>
+                        <span class="view-count-inline"><i class="ti ti-eye"></i> @p.ViewCount</span>
                     </div>
                 </a>
-                <span class="view-count-pill"><i class="ti ti-eye"></i> @p.ViewCount</span>
                 <div class="product-actions">
                     <a asp-action="Edit" asp-route-id="@p.ProductId" class="text-decoration-none small" style="color:var(--mercado-muted)">Edit</a>
                     <span style="color:var(--mercado-border)">|</span>
                     <a asp-action="Delete" asp-route-id="@p.ProductId" class="text-decoration-none small text-danger"
-                       onclick="return confirm('Delete this product?');">Delete</a>
+                    onclick="return confirm('Delete this product?');">Delete</a>
                 </div>
             </div>
         </div>
