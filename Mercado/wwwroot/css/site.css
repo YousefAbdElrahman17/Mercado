@@ -1,31 +1,141 @@
-html {
-  font-size: 14px;
-}
+:root {
+    --mercado-bg: #FBF7F0;
+    --mercado-surface: #FFFFFF;
+    --mercado-tint: #FAECE7;
+    --mercado-ink: #2C2C2A;
+    --mercado-ink-dark: #4A1B0C;
+    --mercado-muted: #5F5E5A;
+    --mercado-accent: #D85A30;
+    --mercado-accent-dark: #993C1D;
+    --mercado-border: #F0E8DC;
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    --bs-primary: var(--mercado-accent);
+    --bs-primary-rgb: 216, 90, 48;
+    --bs-body-bg: var(--mercado-bg);
+    --bs-body-color: var(--mercado-ink);
+    --bs-border-radius: 14px;
+    --bs-border-radius-lg: 20px;
+    --bs-border-radius-sm: 8px;
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--mercado-bg);
+    color: var(--mercado-ink);
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.font-mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ---------- Navbar ---------- */
+.navbar-mercado {
+    background: var(--mercado-surface);
+    border-bottom: 1px solid var(--mercado-border);
+}
+.navbar-brand.font-mono {
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    color: var(--mercado-ink-dark) !important;
+}
+.nav-link-mercado {
+    font-size: 0.85rem;
+    color: var(--mercado-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .15s ease;
+}
+.nav-link-mercado:hover {
+    color: var(--mercado-accent);
+}
+.logout-icon {
+    color: var(--mercado-accent-dark);
+    font-size: 1.15rem;
+    text-decoration: none;
+}
+
+/* ---------- Cards & Buttons ---------- */
+.card {
+    background: var(--mercado-surface);
+    border: none;
+    box-shadow: 0 1px 3px rgba(44, 44, 42, 0.06);
+}
+.btn-primary {
+    background-color: var(--mercado-accent);
+    border-color: var(--mercado-accent);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--mercado-accent-dark);
+    border-color: var(--mercado-accent-dark);
+}
+.btn-outline-primary {
+    color: var(--mercado-accent);
+    border-color: var(--mercado-accent);
+}
+.btn-outline-primary:hover {
+    background-color: var(--mercado-accent);
+    border-color: var(--mercado-accent);
+}
+
+/* ---------- Stat cards (Home) ---------- */
+.stat-card {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.stat-card.stat-alert {
+    background: var(--mercado-tint);
+}
+.stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--mercado-ink-dark);
+    margin-bottom: 4px;
+}
+.stat-alert .stat-value {
+    color: var(--mercado-accent-dark);
+}
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--mercado-muted);
+}
+.stat-alert .stat-label {
+    color: var(--mercado-accent-dark);
+}
+
+/* ---------- Category tiles (used later in Category/Index) ---------- */
+.category-tile {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    min-height: 120px;
+    transition: transform .15s ease;
+}
+.category-tile:hover {
+    transform: translateY(-2px);
+}
+.category-tile i {
+    font-size: 1.6rem;
+    color: var(--mercado-accent);
+}
+.category-tile .category-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--mercado-ink);
+    margin: 0.6rem 0 0.25rem;
+}
+.category-tile .category-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--mercado-accent-dark);
 }
