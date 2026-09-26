@@ -1,0 +1,36 @@
+﻿@model Mercado.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-card">
+    <span class="font-mono small text-uppercase d-block text-center mb-1" style="color:var(--mercado-accent-dark); letter-spacing:.05em;">Welcome back</span>
+    <h4 class="fw-medium text-center mb-4">Sign in to your account</h4>
+
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="All" class="text-danger small mb-2"></div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 rounded-3 py-2">Sign In</button>
+    </form>
+
+    <p class="text-center mt-4 mb-0 small text-muted">
+        Don't have an account? <a asp-action="Register" class="auth-switch-link">Create one</a>
+    </p>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

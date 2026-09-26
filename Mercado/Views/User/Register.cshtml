@@ -1,0 +1,55 @@
+﻿@model Mercado.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-card">
+    <span class="font-mono small text-uppercase d-block text-center mb-1" style="color:var(--mercado-accent-dark); letter-spacing:.05em;">Get started</span>
+    <h4 class="fw-medium text-center mb-4">Create your account</h4>
+
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="All" class="text-danger small mb-2"></div>
+
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger small"></span>
+            </div>
+            <div class="col-6">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 rounded-3 py-2">Create Account</button>
+    </form>
+
+    <p class="text-center mt-4 mb-0 small text-muted">
+        Already have an account? <a asp-action="Login" class="auth-switch-link">Sign in</a>
+    </p>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
