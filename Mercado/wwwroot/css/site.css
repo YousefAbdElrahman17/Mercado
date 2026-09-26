@@ -139,3 +139,43 @@ body {
     font-size: 0.75rem;
     color: var(--mercado-accent-dark);
 }
+/* ---------- Category details card (vertical) ---------- */
+.details-card-vertical {
+    background: var(--mercado-surface);
+    border-radius: var(--bs-border-radius-lg);
+    overflow: hidden;
+    max-width: 480px;
+    margin: 0 auto;
+}
+.details-card-vertical .details-media {
+    height: 160px;
+    background: var(--mercado-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.details-card-vertical .details-media i {
+    font-size: 2.5rem;
+    color: var(--mercado-accent-dark);
+}
+.details-card-vertical .details-body {
+    padding: 1.5rem;
+}
+
+/* ---------- Add/Edit forms ---------- */
+.form-card-category {
+    background: var(--mercado-surface);
+    border-radius: 14px;
+    padding: 1.5rem 1.5rem 1.5rem 1.25rem;
+    border-left: 4px solid var(--mercado-accent);
+    max-width: 480px;
+}
+.form-card-category.edit-mode {
+    border-left-color: var(--mercado-accent-dark);
+}
+.form-card-category .form-card-header {
+    color: var(--mercado-accent-dark);
+}
+.form-card-category.edit-mode .form-card-header {
+    color: var(--mercado-accent-dark);
+}
