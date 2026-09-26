@@ -1,0 +1,40 @@
+﻿@model Mercado.ViewModels.CategoryDetailsViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="details-card-vertical mb-4">
+    <div class="details-media">
+        <i class="ti @Model.IconClass"></i>
+    </div>
+    <div class="details-body">
+        <span class="font-mono small text-uppercase" style="color:var(--mercado-accent-dark); letter-spacing:.05em;">
+            @Model.ProductTitles.Count.ToString("00") items
+        </span>
+        <h3 class="fw-medium mt-1 mb-2">@Model.Name</h3>
+        <p class="text-muted mb-0">@Model.Description</p>
+    </div>
+</div>
+
+<div class="card p-3 mb-3" style="max-width:480px; margin:0 auto;">
+    <h6 class="fw-medium mb-3">Products in this category</h6>
+    @if (Model.ProductTitles.Any())
+    {
+        <ul class="list-unstyled mb-0">
+            @foreach (var title in Model.ProductTitles)
+            {
+                <li class="py-2 border-bottom">@title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted mb-0">No products in this category yet.</p>
+    }
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-outline-primary rounded-3 px-4">
+        <i class="ti ti-arrow-left me-1"></i> Back to Categories
+    </a>
+</div>
