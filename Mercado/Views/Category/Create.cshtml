@@ -18,13 +18,13 @@
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label small text-muted"></label>
-            <input asp-for="Name" class="form-control" style="background:var(--mercado-bg); border:none;" />
+            <input asp-for="Name" class="form-control form-control-mercado"/>
             <span asp-validation-for="Name" class="text-danger small"></span>
         </div>
 
         <div class="mb-4">
             <label asp-for="Description" class="form-label small text-muted"></label>
-            <textarea asp-for="Description" class="form-control" style="background:var(--mercado-bg); border:none;" rows="3"></textarea>
+            <textarea asp-for="Description" class="form-control form-control-mercado" rows="3"></textarea>
         </div>
 
         <div class="d-flex justify-content-end gap-2">
