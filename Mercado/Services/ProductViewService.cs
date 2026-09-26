@@ -1,6 +1,5 @@
-// Services/ProductViewService.cs
-using Microsoft.EntityFrameworkCore;
 using Mercado.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mercado.Services
 {
@@ -13,11 +12,10 @@ namespace Mercado.Services
             _context = context;
         }
 
-        public async Task IncrementViewCountAsync(int productId)
+        public void IncrementViewCount(int productId)
         {
-            await _context.Products
-                .Where(p => p.ProductId == productId)
-                .ExecuteUpdateAsync(s => s.SetProperty(p => p.ViewCount, p => p.ViewCount + 1));
+            _context.Products
+                .Where(p => p.ProductId == productId).ExecuteUpdate(s => s.SetProperty(p => p.ViewCount, p => p.ViewCount + 1));
         }
     }
 }
