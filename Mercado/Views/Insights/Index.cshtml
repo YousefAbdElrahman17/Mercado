@@ -1,0 +1,136 @@
+﻿@model Mercado.ViewModels.InsightsDashboardViewModel
+@{
+    ViewData["Title"] = "AI Insights";
+}
+
+<div class="d-flex align-items-center gap-2 mb-4">
+    <i class="ti ti-chart-bar fs-3" style="color:var(--mercado-accent-dark)"></i>
+    <h3 class="fw-medium mb-0">Insights Dashboard</h3>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<ul class="nav insights-tabs mb-3">
+    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-doc"><i class="ti ti-file-text me-1"></i>Documents</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-analytics"><i class="ti ti-chart-line me-1"></i>Analytics</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-recs"><i class="ti ti-bulb me-1"></i>Recommendations</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-report"><i class="ti ti-report me-1"></i>Report</button></li>
+</ul>
+
+<div class="tab-content">
+    <!-- Documents -->
+    <div class="tab-pane fade show active" id="tab-doc">
+        <div class="doc-status-card mb-3">
+            @if (Model.ActiveDocumentName != null)
+            {
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span><i class="ti ti-paperclip me-1" style="color:var(--mercado-accent-dark)"></i> <strong>@Model.ActiveDocumentName</strong>
+                        <span class="text-muted small ms-2">uploaded @Model.ActiveDocumentUploadedAt?.ToString("yyyy-MM-dd")</span>
+                    </span>
+                    <form asp-action="DeleteDocument" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-3">
+                            <i class="ti ti-trash me-1"></i>Remove
+                        </button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <form asp-action="UploadDocument" method="post" enctype="multipart/form-data" class="d-flex gap-2 flex-wrap">
+                    <input type="file" name="File" accept="application/pdf" class="form-control" style="max-width:280px;" required />
+                    <button type="submit" class="btn btn-primary rounded-3 px-4">Upload PDF</button>
+                </form>
+            }
+        </div>
+
+        <div class="card p-3" style="max-width:640px;">
+            <div id="docChatWindow" class="chat-window mb-2"></div>
+            <form id="docChatForm" class="chat-input-bar d-flex gap-2">
+                <input id="docChatInput" class="form-control" placeholder="Ask about the uploaded document..." />
+                <button type="submit" class="btn btn-primary rounded-3 px-4">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="tab-pane fade" id="tab-analytics">
+        <div class="card p-3" style="max-width:640px;">
+            <div id="analyticsWindow" class="chat-window mb-2"></div>
+            <form id="analyticsForm" class="chat-input-bar d-flex gap-2">
+                <input id="analyticsInput" class="form-control" placeholder="e.g. Which products are low in stock?" />
+                <button type="submit" class="btn btn-primary rounded-3 px-4">Ask</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="tab-pane fade" id="tab-recs">
+        <button id="btnRecs" class="btn btn-outline-primary rounded-3 mb-3">
+            <i class="ti ti-refresh me-1"></i> Get Restock Recommendations
+        </button>
+        <div id="recsResult" class="insight-result-box"></div>
+    </div>
+
+    <!-- Report -->
+    <div class="tab-pane fade" id="tab-report">
+        <button id="btnReport" class="btn btn-outline-primary rounded-3 mb-3">
+            <i class="ti ti-file-analytics me-1"></i> Generate Inventory Report
+        </button>
+        <div id="reportResult" class="insight-result-box"></div>
+    </div>
+</div>
+@section Scripts {
+<script>
+    async function postJson(url, body) {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: body ? JSON.stringify(body) : null
+        });
+        return res.ok ? await res.json() : null;
+    }
+
+    function appendMsg(container, text, isUser) {
+        const div = document.createElement('div');
+        div.className = 'chat-bubble ' + (isUser ? 'user' : 'bot');
+        div.innerText = text;
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    document.getElementById('docChatForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const win = document.getElementById('docChatWindow');
+        const q = document.getElementById('docChatInput').value.trim();
+        if (!q) return;
+        appendMsg(win, q, true);
+        document.getElementById('docChatInput').value = '';
+        const data = await postJson('/Insights/AskDocument', { question: q });
+        appendMsg(win, data ? data.reply : 'Something went wrong', false);
+    });
+
+    document.getElementById('analyticsForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const win = document.getElementById('analyticsWindow');
+        const q = document.getElementById('analyticsInput').value.trim();
+        if (!q) return;
+        appendMsg(win, q, true);
+        document.getElementById('analyticsInput').value = '';
+        const data = await postJson('/Insights/AskAnalytics', { question: q });
+        appendMsg(win, data ? data.reply : 'Something went wrong', false);
+    });
+
+    document.getElementById('btnRecs').addEventListener('click', async () => {
+        const data = await postJson('/Insights/GetRecommendations');
+        document.getElementById('recsResult').innerText = data ? data.reply : 'Something went wrong';
+    });
+
+    document.getElementById('btnReport').addEventListener('click', async () => {
+        const data = await postJson('/Insights/GetReport');
+        document.getElementById('reportResult').innerText = data ? data.reply : 'Something went wrong';
+    });
+</script>
+}
